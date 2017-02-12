@@ -1,3 +1,5 @@
+using module "$pwd\repositories\Appender.ps1"
+using module "$pwd\repositories\QueryManager.ps1"
 <#
 	.DESCRIPTION
 		Repository design pattern interface
@@ -8,13 +10,11 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Appender.ps1"
-. "$pwd\repositories\QueryManager.ps1"
 class Repository
 {
-    [Appender] $appender
-    [QueryManager] $queryManager
-    Repository([Appender] $appender, [QueryManager] $queryManager) {
+    [Object] $appender
+    [Object] $queryManager
+    Repository([Object] $appender, [Object] $queryManager) {
         $this.appender = $appender
         $this.queryManager = $queryManager
     }

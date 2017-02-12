@@ -8,8 +8,9 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Reader.ps1"
-. "$pwd\http\HTTPRequest.ps1"
+using module "$pwd\repositories\Reader.ps1"
+using module "$pwd\http\HTTPRequest.ps1"
+
 class RestReader : Reader
 {
     [HTTPRequest] $request

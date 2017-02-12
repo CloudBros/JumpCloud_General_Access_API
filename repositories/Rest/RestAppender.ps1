@@ -8,18 +8,18 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Appender.ps1"
-. "$pwd\repositories\Rest\RestWriter.ps1"
+using module "$pwd\repositories\Appender.ps1"
+using module "$pwd\http\HTTPRequest.ps1"
 class RestAppender : Appender
 {
-    [RestWriter] $writer
     [string] $remote
     [string] $path
+    [string] $apiKey
 
-    RestAppender([RestWriter] $writer, [string] $remote, [string] $path) {
-        $this.reader = $reader
+    RestAppender([string] $remote, [string] $path, [string] $apiKey) {
         $this.remote = $remote
 		$this.path = $path
+        $this.apiKey = $apiKey
     }
     <#
     	.DESCRIPTION
@@ -34,9 +34,9 @@ class RestAppender : Appender
     	.EXAMPLE
             $appender.update([Object] object)
     #>
-	append([Object] $object) {
-        $writer = $this.buildWriter("/", "Post", $null, $null, $object);
-        $writer.write();
+	[Object] append([Object] $object) {
+        $writer = $this.buildWriter("/", "Post", $null, $this.apiKey, $object);
+        return $writer.write();
     }
 
     <#
@@ -52,9 +52,9 @@ class RestAppender : Appender
     	.EXAMPLE
             $appender.delete([string] id)
     #>
-	delete([string] $id) {
-        $writer = $this.buildWriter("/", "Delete");
-        $writer.write();
+	[Object] delete([string] $id) {
+        $writer = $this.buildWriter("/", "Delete", $null, $this.apiKey);
+        return $writer.write();
 	}
 
     <#
@@ -73,15 +73,15 @@ class RestAppender : Appender
     	.EXAMPLE
             $appender.update([string] id, [Object] object)
     #>
-    update([string] $id, [Object] $object) {
-        $writer = $this.buildWriter("/", "Put", $id, $null, $object);
-        $writer.write();
+    [Object] update([string] $id, [Object] $object) {
+        $writer = $this.buildWriter("/", "Put", $id, $this.apiKey, $object);
+        return $writer.write();
 	}
 
-    [RestWriter] buildWriter([string] $separator, [string] $type, [string] $appender = $null,
+    [Object] buildWriter([string] $separator, [string] $type, [string] $appender = $null,
                                 [Object] $header = $null, [Object] $body = $null, [Object] $credential = $null) {
         $httpRequest = [HTTPRequest]::new($this.remote + $separator + $this.path + "/" + $appender, $type, $header, $body, $credential);
-        $writer = [RestWriter]::new($httprequest);
-        return $writer;
+        $writer = [Object]::new($httprequest);
+        return $writer.write();
     }
 }

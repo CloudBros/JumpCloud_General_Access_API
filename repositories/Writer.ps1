@@ -20,7 +20,8 @@ class Writer
     	.EXAMPLE
             $writer.write([Object] object)
     #>
-    write([Object] object) {
+    [Object] write([Object] $object) {
         echo "Not Yet Implemented"
+        return $null
     }
 }

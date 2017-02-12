@@ -8,17 +8,18 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Rest\RestReader.ps1"
-class RestQueryManager{
+using module "$pwd\repositories\QueryManager.ps1"
+using module "$pwd\http\HTTPRequest.ps1"
+class RestQueryManager : QueryManager {
 
-    [RestReader] $reader
 	[string] $remote
     [string] $path
+    [string] $apiKey
 
-    RestQueryManager([RestReader] $reader, [string] $remote, [string] $path) {
-        $this.reader = $reader
+    RestQueryManager([string] $remote, [string] $path, [string] $apiKey) {
         $this.remote = $remote
 		$this.path = $path
+        $this.apiKey = $apiKey
     }
 
     <#
@@ -32,7 +33,7 @@ class RestQueryManager{
             [Object] object = $queryManager.getById([int] id)
     #>
     [Object] getById([string] $id) {
-        $reader = $this.buildReader("/search/", "Get", $id);
+        $reader = $this.buildReader("/search/", "Get", $id, $this.apiKey);
         return $reader.read();
     }
 
@@ -46,8 +47,8 @@ class RestQueryManager{
     	.EXAMPLE
             [Object] object = $queryManager.getAll()
     #>
-    [Object[]] getAll() {
-        $reader = $this.buildReader("/", "Get");
+    [Object] getAll() {
+        $reader = $this.buildReader("/", "Get", $null, $this.apiKey);
         return $reader.read();
     }
 
@@ -62,14 +63,14 @@ class RestQueryManager{
             [Object] object = $queryManager.getAll([Object] request)
     #>
     [Object] get([Object] $request) {
-        $reader = $this.buildReader("/search/", "Get");
+        $reader = $this.buildReader("/search/", "Get", $null, $this.apiKey);
         return $reader.read();
     }
 
-    [RestReader] buildReader([string] $separator, [string] $type, [string] $appender = $null,
+    [Object] buildReader([string] $separator, [string] $type, [string] $appender = $null,
                                 [Object] $header = $null, [Object] $body = $null, [Object] $credential = $null) {
         $httpRequest = [HTTPRequest]::new($this.remote + $separator + $this.path + "/" + $appender, $type, $header, $body, $credential);
-        $reader = [RestReader]::new($httprequest);
+        $reader = [Object]::new($httprequest);
         return $reader;
     }
 }

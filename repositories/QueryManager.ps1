@@ -8,9 +8,9 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Reader.ps1"
+using module "$pwd\repositories\Reader.ps1"
 class QueryManager {
-	[Reader] $reader
+	[Object] $reader
 
     <#
     	.DESCRIPTION

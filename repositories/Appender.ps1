@@ -8,10 +8,10 @@
 	.EXAMPLE
 
 #>
-. "$pwd\repositories\Writer.ps1"
+using module "$pwd\repositories\Writer.ps1"
 class Appender
 {
-    [Writer] $writer
+    [Object] $writer
     <#
     	.DESCRIPTION
     		Appends data to a destination
