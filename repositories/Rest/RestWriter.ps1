@@ -8,8 +8,8 @@
 	.EXAMPLE
 
 #>
-using module "$pwd\repositories\Writer.ps1"
-using module "$pwd\http\HTTPRequest.ps1"
+. ".\repositories\Writer.ps1"
+. ".\http\HTTPRequest.ps1"
 class RestWriter : Writer
 {
 	[HTTPRequest] $request

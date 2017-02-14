@@ -8,7 +8,7 @@
 	.EXAMPLE
 
 #>
-using module "$pwd\repositories\Reader.ps1"
+. ".\repositories\Reader.ps1"
 class QueryManager {
 	[Object] $reader
 

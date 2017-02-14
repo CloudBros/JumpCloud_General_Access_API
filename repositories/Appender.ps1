@@ -8,7 +8,7 @@
 	.EXAMPLE
 
 #>
-using module "$pwd\repositories\Writer.ps1"
+. ".\repositories\Writer.ps1"
 class Appender
 {
     [Object] $writer

@@ -8,8 +8,8 @@
 	.EXAMPLE
 
 #>
-using module "$pwd\repositories\Appender.ps1"
-using module "$pwd\http\HTTPRequest.ps1"
+. ".\repositories\Appender.ps1"
+. ".\http\HTTPRequest.ps1"
 class RestAppender : Appender
 {
     [string] $remote

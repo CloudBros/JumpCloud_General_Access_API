@@ -1,7 +1,3 @@
-using module ".\repositories\Repository.ps1"
-using module ".\repositories\Rest\RestAppender.ps1"
-using module ".\repositories\Rest\RestQueryManager.ps1"
-
 param (
     [parameter(Mandatory=$true, Position=0)] [string] $target,
     [parameter(Mandatory=$true, Position=1)] [string] $action,
@@ -9,6 +5,10 @@ param (
     [parameter(Mandatory=$false, Position=3)] [string] $id = $null,
     [parameter(Mandatory=$false, Position=4)] [Object] $argument = $null
 )
+
+. ".\repositories\Repository.ps1"
+. ".\repositories\Rest\RestAppender.ps1"
+. ".\repositories\Rest\RestQueryManager.ps1"
 
 $actions = ("Add", "GetById", "GetAll", "Search", "Update", "Delete")
 $apiKey = cat $keyFile

@@ -8,8 +8,8 @@
 	.EXAMPLE
 
 #>
-using module "$pwd\repositories\QueryManager.ps1"
-using module "$pwd\http\HTTPRequest.ps1"
+. ".\repositories\QueryManager.ps1"
+. ".\http\HTTPRequest.ps1"
 class RestQueryManager : QueryManager {
 
 	[string] $remote

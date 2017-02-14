@@ -1,5 +1,5 @@
-using module "$pwd\repositories\Appender.ps1"
-using module "$pwd\repositories\QueryManager.ps1"
+. ".\repositories\Appender.ps1"
+. ".\repositories\QueryManager.ps1"
 <#
 	.DESCRIPTION
 		Repository design pattern interface
